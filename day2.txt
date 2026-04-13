@@ -1,0 +1,70 @@
+# ✈️ Flight Data Pipeline – Day 2
+
+## 📅 Date
+Next Working Day
+
+## 🎯 Objective
+To explore different methods of selecting required columns and resolving schema-related issues during data ingestion.
+
+---
+
+## 🚀 Work Completed
+
+### 1. Improved Data Loading Strategy
+- Changed approach to load the complete dataset instead of partial schema loading.
+- Ensured accurate data ingestion without column misalignment.
+
+---
+
+### 2. Column Selection Techniques
+- Explored various ways to extract only the required columns from the dataset.
+- Focused on selecting relevant columns for analysis instead of processing the entire dataset.
+
+---
+
+### 3. Resolving Schema Mismatch Issues
+- Identified that Spark maps CSV data by position rather than column name.
+- Fixed earlier issues by loading full data first and then selecting necessary columns.
+- Ensured correct alignment between data and schema.
+
+---
+
+### 4. Working with Temporary Views
+- Created temporary views to run SQL queries on the dataset.
+- Simplified data exploration using SQL-based operations.
+
+---
+
+### 5. Querying and Data Exploration
+- Performed data validation using SQL queries.
+- Checked column structure, count, and data consistency.
+
+---
+
+### 6. View Creation
+- Created logical views on top of processed data for easier access and reuse.
+
+---
+
+## ⚠️ Challenges Faced
+- Column misalignment due to incorrect schema assumptions.
+- Handling datasets with a large number of columns.
+- Understanding Spark’s internal behavior for CSV processing.
+
+---
+
+## 💡 Key Learnings
+- Always load full data when schema is uncertain.
+- Column selection should be done after proper data loading.
+- Spark processes CSV data based on column order, not names.
+- Temporary views are useful for quick analysis and debugging.
+
+---
+
+## 🔜 Next Steps
+- Build Bronze layer for raw data ingestion.
+- Separate clean and corrupt data into different layers.
+- Convert data into optimized formats like Delta.
+- Begin designing a full data pipeline architecture (Bronze → Silver → Gold).
+
+---
