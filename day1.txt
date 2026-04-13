@@ -1,0 +1,73 @@
+Day 1 – Data Ingestion & Corrupt Record Handling (Friday)
+
+
+# ✈️ Flight Data Pipeline – Day 1
+
+## 📅 Date
+Friday
+
+## 🎯 Objective
+To understand data ingestion from S3 and handle corrupt or malformed records using different read modes in Spark.
+
+---
+
+## 🚀 Work Completed
+
+### 1. Data Ingestion from S3
+- Successfully connected to S3 and loaded the flight dataset into Databricks.
+- Verified dataset structure and initial schema.
+
+---
+
+### 2. Understanding Spark Read Modes
+Explored different data reading modes to handle real-world messy data:
+
+- **Permissive Mode**
+  - Default mode in Spark.
+  - Loads all data without failing.
+  - Replaces invalid values with nulls.
+  - Captures corrupt records in a special column.
+
+- **Drop Malformed Mode**
+  - Removes rows that contain invalid or inconsistent data.
+  - Useful when bad data is not required.
+
+- **Fail Fast Mode**
+  - Immediately stops execution when encountering corrupt data.
+  - Suitable for strict data pipelines.
+
+---
+
+### 3. Handling Corrupt Records
+- Learned about Spark's default corrupt record handling mechanism.
+- Identified how corrupt rows are captured and stored.
+- Explored ways to inspect and analyze bad records.
+
+---
+
+### 4. Schema Understanding
+- Observed how schema mismatch affects data ingestion.
+- Identified issues when the provided schema does not match the actual dataset.
+- Understood the importance of aligning schema with source data.
+
+---
+
+## ⚠️ Challenges Faced
+- Schema mismatch leading to incorrect data mapping.
+- Difficulty in identifying corrupt records initially.
+- Understanding Spark’s behavior with different read modes.
+
+---
+
+## 💡 Key Learnings
+- Permissive mode is ideal for handling real-world datasets.
+- Proper schema design is critical for accurate data ingestion.
+- Corrupt records should be tracked instead of ignored.
+- Different modes serve different use cases in data engineering pipelines.
+
+---
+
+## 🔜 Next Steps
+- Improve schema handling techniques.
+- Explore efficient column selection methods.
+- Move towards structured data pipeline design.
