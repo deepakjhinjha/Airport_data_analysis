@@ -1,0 +1,181 @@
+# ✈️ Flight Data Analytics – Silver Layer Caching Analysis
+
+## 📌 Overview
+
+This project demonstrates **performance optimization in PySpark** using caching techniques on a **Delta Lake table stored in Amazon S3**.
+We compare execution time before and after caching to understand **Spark's lazy execution model** and optimization strategies in a **serverless Databricks environment**.
+
+---
+
+## 🧱 Data Source
+
+* **Format:** Delta Lake
+* **Storage:** Amazon S3
+* **Path:**
+  `s3://flight-analytics-de-divyansh-2026/delta_silver_folder`
+
+---
+
+## 🚀 Step 1: Load Data
+
+```python
+df_silver = spark.read.format("delta").load("s3://flight-analytics-de-divyansh-2026/delta_silver_folder")
+display(df_silver)
+```
+
+---
+
+## ⏱️ Step 2: Measure Execution Time (Without Cache)
+
+```python
+import time
+
+start_time = time.time()
+row_count = df_silver.count()
+end_time = time.time()
+
+time_taken = end_time - start_time
+
+print("Row Count:", row_count)
+print("Time Taken Without Cache:", round(time_taken, 2), "seconds")
+```
+
+### 🔍 Explanation
+
+* `count()` is an **action** in Spark → triggers full computation
+* Since no caching is applied, Spark reads data from source every time
+* This results in **higher execution time**
+
+---
+
+## ⚡ Step 3: Apply Caching
+
+```python
+df_silver.cache()
+
+# Action required to materialize cache
+df_silver.count()
+```
+
+### 🧠 Key Concept
+
+> Spark follows **lazy evaluation**, meaning transformations are not executed until an action is triggered.
+
+---
+
+## 📌 Golden Rule
+
+```
+No Action = No Cache
+```
+
+---
+
+## 🚫 Issue Encountered
+
+While working in a **serverless environment**, the following error occurred:
+
+```
+[NOT_SUPPORTED_WITH_SERVERLESS] PERSIST TABLE is not supported on serverless compute
+```
+
+---
+
+## ❗ Root Cause
+
+* `PERSIST TABLE` is a **SQL-level caching operation**
+* Not supported in **Databricks Serverless Compute**
+* Serverless environments are **stateless and auto-scalable**
+* Hence, **persistent table caching is restricted**
+
+---
+
+## ✅ Solution & Best Practices
+
+### ✔️ Use DataFrame-Level Caching (Recommended)
+
+```python
+df_silver.cache()
+df_silver.count()
+```
+
+---
+
+### ✔️ Clear Cache (if needed)
+
+```python
+spark.catalog.clearCache()
+```
+
+---
+
+### ✔️ Restart Session (Critical Fix)
+
+If error persists:
+
+* Restart cluster / serverless session
+* Remove any `PERSIST TABLE` statements from notebook
+
+---
+
+## 🔄 Alternative Optimization Techniques
+
+### 🔹 1. Delta Table Optimization
+
+```sql
+OPTIMIZE table_name;
+ZORDER BY (column_name);
+```
+
+✔ Improves query performance
+✔ Efficient for large datasets
+
+---
+
+### 🔹 2. Materialize Data
+
+```sql
+CREATE TABLE new_table AS
+SELECT * FROM existing_table;
+```
+
+✔ Acts as manual persistence
+✔ Fully supported in serverless
+
+---
+
+### 🔹 3. Persist with Storage Levels (For Large Data)
+
+```python
+from pyspark import StorageLevel
+
+df_silver.persist(StorageLevel.MEMORY_AND_DISK)
+df_silver.count()
+```
+
+✔ Prevents memory overflow
+✔ Reliable for production pipelines
+
+---
+
+## 📊 Key Learnings
+
+* Spark uses **lazy execution**
+* **Actions trigger computation**
+* Cache is only applied after an action
+* Serverless does **not support table-level persistence**
+* DataFrame caching is the correct approach
+* Restarting session can resolve hidden execution state issues
+
+---
+
+## 🎯 Conclusion
+
+This project highlights how **caching significantly improves performance in Spark workflows** while also addressing **limitations of serverless compute environments**.
+Using the right optimization techniques like **DataFrame caching, Delta optimization, and proper execution flow** is essential for building efficient data pipelines.
+
+---
+
+## 🏷️ Tags
+
+`#PySpark` `#DataEngineering` `#Databricks` `#DeltaLake` `#AWS` `#BigData` `#PerformanceOptimization`
