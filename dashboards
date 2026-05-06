@@ -1,0 +1,63 @@
+# ✈️ Airline Performance Dashboard (Power BI)
+
+## 📌 Project Overview
+This project focuses on building an **interactive Power BI dashboard** using airline performance data.  
+The goal was to analyze **flight delays, cancellations, and operational efficiency** across different airlines.
+
+---
+
+## 🎯 Objectives
+- Analyze total flights, delays, and cancellations
+- Compare airline performance
+- Create meaningful visual insights
+- Perform data transformation using **Power Query (without DAX)**
+
+---
+
+## 🧰 Tools & Technologies Used
+- Power BI Desktop
+- Power Query (M Language)
+- Data Visualization Techniques
+
+---
+
+## 📊 Dashboard Features
+
+### 🔹 1. Airline-wise Total Flights
+- Displays **Sum of Total Flights** per airline
+- Helps identify top-performing airlines
+
+---
+
+### 🔹 2. Delay Analysis
+- Average Carrier Delay
+- Average Late Aircraft Delay
+- Visualized using:
+  - Bar Charts
+  - Comparative visuals
+
+---
+
+### 🔹 3. Cancellation Analysis
+- Total Cancelled Flights by Airline
+- Represented using **Pie Charts**
+
+---
+
+### 🔹 4. KPI Comparison
+- On-time performance %
+- Delay metrics comparison
+- Airline-wise breakdown
+
+---
+
+## ⚙️ Data Transformation (Power Query)
+
+### ✅ Created Calculated Column WITHOUT DAX
+
+Instead of using DAX, a new column was created using **Power Query (M Language)**.
+
+### Example:
+
+```m
+Total Flights Processed = [ON_TIME_FLIGHTS] + [DELAYED_FLIGHTS]
